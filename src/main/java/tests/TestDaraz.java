@@ -109,7 +109,7 @@ public class TestDaraz extends UtilBase {
 	 * valid one. For instance, if there are 5 datasets, the first 4 should log in
 	 * unsuccessfully and the last one should successfully log in.
 	 */
-//	@Test(priority = 2)
+	@Test(priority = 2)
 	public void loginTest() {
 		try {
 			test = extent.createTest("loginTest");
@@ -183,7 +183,7 @@ public class TestDaraz extends UtilBase {
 	 * Then, click on the fourth suggestion from the top and add an item to the cart
 	 * with a specific price (for example: Rs. 28,900).
 	 */
-//	@Test(priority = 3)
+	@Test(priority = 3)
 	public void searchItem() {
 		try {
 			test = extent.createTest("searchItem");
@@ -299,7 +299,7 @@ public class TestDaraz extends UtilBase {
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='cart-message']/span")));
 			String resultText = pageObj.addedtocart_text_modal().getText();
 
-			if (resultText.contains("1 new item(s) have been added to your cart")) {
+			if (resultText.contains("new item(s) have been added to your cart")) {
 				testResult = true;
 				System.out.println("SUCCESS : Item added to card");
 				test.pass("Item added to cart");
@@ -336,7 +336,7 @@ public class TestDaraz extends UtilBase {
 		return testResult;
 	}
 
-//	@Test(priority = 4)
+	@Test(priority = 4)
 	public void flashSale_test() {
 		try {
 			test = extent.createTest("flashSale_test");
@@ -447,7 +447,7 @@ public class TestDaraz extends UtilBase {
 	 * test 5. Generate a new test case where you navigate to the "Sneakers"
 	 * category and record the name and price of the first 20 pair of sneakers into
 	 * an Excel sheet named "ShoeList.csv". Then, add the first item containing name
-	 * ìAir Force 1î with size 43 and quantity 2 to the cart
+	 * ÔøΩAir Force 1ÔøΩ with size 43 and quantity 2 to the cart
 	 */
 	@Test(priority = 5)
 	public void sneaker_test() {
@@ -467,33 +467,68 @@ public class TestDaraz extends UtilBase {
 
 //			get all the products from Sneakers section
 			List<WebElement> sneakersName_list = driver.findElements(By.id("id-title"));
-			List<WebElement> sneakersPrice_list = driver.findElements(By.id("id-price"));
+			List<WebElement> sneakersPrice_list = driver.findElements(By.xpath("//*[@id='id-price']/div/div[1]/span[2]"));
 
 			System.out.println(sneakersName_list.size());
 			System.out.println(sneakersPrice_list.size());
 			
+//			write all product to Excel file
+			System.out.println("Write to Excel File");
 			for (int i = 0; i<sneakersName_list.size(); i++) {
-				System.out.println(sneakersName_list.get(i).getText()+ " "+ sneakersPrice_list.get(i).getText());
+//				System.out.println((i+1) + " " +sneakersName_list.get(i).getText()+ " "+ sneakersPrice_list.get(i).getText());
 				ExcelAPI.writeExcel((i+1), sneakersName_list.get(i).getText(), sneakersPrice_list.get(i).getText());
 			}
-//			
-
-// Initialize variable with expected values
-//			Hit the API
-//			Initialize variable with actual values
-//			Run the Test
-			if (true) {
-				System.out.println("SUCCESS : sneaker_test");
-				test.pass("sneaker_test");
-				test.addScreenCaptureFromPath(capture("sneaker_test_success"), "sneaker_test ");
-//		 Use JavaScriptExecutor to scroll the element into view
-//				jsDriver.executeScript("arguments[0].scrollIntoView({block: 'center'});", pqc_po.salesPrice_table());
-			} else {
-				System.out.println("ERROR : sneaker_test ");
-				test.fail("sneaker_test");
-				test.addScreenCaptureFromPath(capture("sneaker_test_failed"), "sneaker_test");
+			
+//			search for the Product 
+			int position = -1;
+			for (int i = 0; i<sneakersName_list.size(); i++) {
+				String productname = sneakersName_list.get(i).getText();
+				String searchName = "Air Force 1";
+				
+				System.out.println(productname);
+				if (productname.contains(searchName)) {
+//					System.out.println("Found product : " + searchName);
+					position = i;
+					break;
+				}
+			}
+			
+			if (position > 0) {
+				System.out.println("Product position in screen : " + (position+1));
+//				scroll to the element and capture screenshot
+				jsDriver.executeScript("arguments[0].scrollIntoView({block: 'center'});", sneakersName_list.get(position));
+				Thread.sleep(1000);
+				sneakersName_list.get(position).click();
+				
+				/*
+				 * Then, add the first item containing name ‚ÄúAir Force 1‚Äù with size 43 and quantity 2 to the cart.
+				 */
+				test.addScreenCaptureFromPath(capture("Searched Product Found"), "Searched Product Found");
+				
+				pageObj.size43_span_product().click();
+				Thread.sleep(1000);
+				
+//				work around for the qty
+			String selected = 	pageObj.quantity_input_product().getAttribute("value");
+			if (selected.equals("1")) {
+				pageObj.addquantity_button_product().click();
+			}
+				Thread.sleep(1000);
+				
+				test.addScreenCaptureFromPath(capture("Qty and Size Adjusted"), "Qty and size Adjusted");
+				pageObj.addtocart_button_product().click();
+				
+				verifyItemAddedToCart();
+				
+				
+				
+			}else {
+//				Terminate the test
+				test.fail("Search item not found");
 				Assert.assertTrue(false);
 			}
+			
+
 			System.out.println("END	 : sneaker_test	---------------------------------------");
 		} catch (Exception e) {
 			System.out.println("EXCEPTION: sneaker_test ");
@@ -503,6 +538,23 @@ public class TestDaraz extends UtilBase {
 			Assert.assertTrue(false);
 		}
 	}
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	@AfterClass
 	public void teardown() {

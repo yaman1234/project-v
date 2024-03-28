@@ -149,7 +149,17 @@ public class DarazPageObjects {
 	public WebElement price_product_search() {
 		return WebElementLib.findMyElement("cssSelector", "#id-title");
 	}
+	public WebElement size43_span_product() {
+		return WebElementLib.findMyElement("xpath", "//span[@class='sku-variable-size' and @title='43']");
+	}
 	
+	public WebElement quantity_input_product() {
+		return WebElementLib.findMyElement("xpath", "//*[@id='module_quantity-input']/div/div/div/div/div[2]/span/input");
+	}
+	
+	public WebElement addquantity_button_product() {
+		return WebElementLib.findMyElement("xpath", "//*[@id=\"module_quantity-input\"]/div/div/div/div/div[1]/a[1]/span");
+	}
 	
 	
 }
