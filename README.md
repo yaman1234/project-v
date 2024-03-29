@@ -41,7 +41,7 @@ Follow these steps to run the Selenium project using Java on your local machine.
 2. Import the project in eclise
 3. Run TestDaraz.java file under the tests package
 
-#Project Folders
+# Project Folders
 ## Database
 database created using sqlite3 and is named mydb.db, stored under database folder
 
