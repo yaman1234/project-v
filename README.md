@@ -1,5 +1,8 @@
-# project-v
+# project-v [Selenium Project]
+This project is designed to demonstrate how to use Selenium for automated testing of web applications.
 
+
+## Assignment
 UI Automation - Automate Daraz login and search using Java, 
 Selenium, and the Page Object Model (POM) design pattern.
 The project developed is supposed to accomplish following objectives:
@@ -24,3 +27,28 @@ and price of the first 20 pair of sneakers into an Excel sheet named "ShoeList.c
 Then, add the first item containing name “Air Force 1” with size 43 and quantity 2 to the cart.
 6. Provide a README.md file explaining how to set up the project, run the tests, and any other 
 relevant information
+
+# Running a Selenium Project in Java
+Follow these steps to run the Selenium project using Java on your local machine.
+
+## Prerequisites
+- Java Development Kit (JDK) installed (version 8 or higher)
+- Selenium WebDriver for Java
+- Web browser (e.g., Chrome, Firefox)
+
+## Installation and Setup
+1. Clone the repository to your local machine:
+2. Import the project in eclise
+3. Run TestDaraz.java file under the tests package
+
+#Project Folders
+## Database
+database created using sqlite3 and is named mydb.db, stored under database folder
+
+## testReports
+TestNG is used for the purpose of Reporting,
+under the testReports folder, TestNG report is stored in html format
+
+## testData
+testData folder stores an Excel file (ShoeList.xlsx) which holds the list of products
+
