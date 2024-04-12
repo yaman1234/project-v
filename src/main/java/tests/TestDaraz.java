@@ -119,7 +119,7 @@ public class TestDaraz extends UtilBase {
 
 //			Initialize the credentials
 			String username = "yamanmaharjan00@gmail.com";
-			String password = "Qwerty123456";
+			String password = "valid_Password";
 			String valid = "yes";
 
 //			click login button
